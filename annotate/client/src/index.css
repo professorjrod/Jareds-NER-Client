@@ -16,6 +16,15 @@ body {
 .navbar div {
   @apply space-x-2 font-semibold text-blue-500;
 }
+tr {
+  @apply border-b;
+}
+table {
+  @apply m-auto w-fit;
+}
+.title {
+  @apply text-2xl font-bold text-center;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

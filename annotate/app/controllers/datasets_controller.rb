@@ -1,7 +1,9 @@
 class DatasetsController < ApplicationController
-  def show
+  def index
     render json: Dataset.all
   end
 
-  def index; end
+  def show
+    render json: Dataset.find(params[:id])
+  end
 end
