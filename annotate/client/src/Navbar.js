@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => (
-  <div className="navbar">
+  <div className="navbar flex">
     <div className="navbar-brand">
       <Link className="navbar-item" to="/">
         Annotator
