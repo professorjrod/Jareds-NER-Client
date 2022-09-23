@@ -1,24 +1,9 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+*import 'csv'
+*dataset = Dataset.first
+*csv = CSV.read("path-to-your-data")
+*csv.each do |row|
+*dataset.texts.build(text: row[0])
+*end
+\*dataset.save
