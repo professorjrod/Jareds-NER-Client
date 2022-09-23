@@ -1,5 +1,5 @@
 # README
-#How to import dataset texts from csv
+# How to import dataset texts from csv
 >Make a dataset with the title of your dataset first
 >
 >in rails console (rails c):
