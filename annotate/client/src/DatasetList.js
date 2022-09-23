@@ -11,7 +11,7 @@ const DatasetList = () => {
   const fetchDatasets = () => {
     fetch("/datasets/index")
       .then((res) => res.json())
-      .then((data) => setDatasets([datasets, ...data]))
+      .then((data) => setDatasets(data))
       .catch((err) => console.log(err));
   };
 
@@ -35,10 +35,7 @@ const Items = ({ items }) => {
           <tr key={dataset.id}>
             <td>{dataset.title}</td>
             <td>
-              <Link
-                className="underline px-2 text-blue-500"
-                to={`/datasets/${dataset.id}`}
-              >
+              <Link className="breadcrumb" to={`/datasets/${dataset.id}`}>
                 View
               </Link>
             </td>

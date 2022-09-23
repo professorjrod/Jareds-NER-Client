@@ -19,7 +19,7 @@ const Show = () => {
 
   return (
     <>
-      <Link to="/datasets" className="text-blue-500 hover:underline">
+      <Link to="/datasets" className="breadcrumb">
         &laquo; All Datasets
       </Link>
       {dataset === {} ? (
@@ -48,9 +48,9 @@ const Texts = ({ texts }) => (
           <td>
             <Link
               className="underline px-2 text-blue-500"
-              to={`/text/${text.id}`}
+              to={`/annotate/${text.id}`}
             >
-              Annotate
+              Annotate &raquo;
             </Link>
           </td>
         </tr>

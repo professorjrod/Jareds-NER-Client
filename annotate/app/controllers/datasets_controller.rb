@@ -1,4 +1,4 @@
-class DatasetsController < ApplicationController
+class DatasetController < ApplicationController
   def index
     render json: Dataset.all
   end
