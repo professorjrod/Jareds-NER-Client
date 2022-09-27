@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_23_004747) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_27_061503) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "dataset_text_annotations", force: :cascade do |t|
+    t.bigint "dataset_text_id", null: false
+    t.integer "selection_start", null: false
+    t.integer "selection_end", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dataset_text_id"], name: "index_dataset_text_annotations_on_dataset_text_id"
+  end
 
   create_table "dataset_texts", force: :cascade do |t|
     t.bigint "dataset_id", null: false
@@ -28,5 +37,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_23_004747) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "dataset_text_annotations", "dataset_texts"
   add_foreign_key "dataset_texts", "datasets"
 end
