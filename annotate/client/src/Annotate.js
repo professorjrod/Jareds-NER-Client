@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { TokenAnnotator } from "react-text-annotate";
+import { TextAnnotator } from "react-text-annotate";
 const Annotate = () => {
   let { id } = useParams();
   let [text, setText] = useState({ text: "Loading..." });
   let [state, setState] = useState({
-    value: [{ start: null, end: null, tag: "MAKE" }],
+    value: [],
     tag: "MAKE",
   });
 
   const TAG_COLORS = {
-    MAKE: "blue",
-    MODEL: "green",
+    MAKE: "#5050ef99",
+    MODEL: "#71be71",
+    YEAR: "#fa8585",
+    TRIM: "#f4c56f",
   };
 
   useEffect(() => {
@@ -30,22 +32,25 @@ const Annotate = () => {
 
       <div className="text-card">
         <div className="preview">
+          <h1>
+            <strong>Edit</strong>
+          </h1>
           <select
             onChange={(e) => setState({ ...state, tag: e.target.value })}
             value={state.tag}
           >
             <option value="MAKE">MAKE</option>
             <option value="MODEL">MODEL</option>
+            <option value="YEAR">YEAR</option>
+            <option value="TRIM">TRIM</option>
           </select>
-          <h1>
-            <strong>Preview</strong>
-          </h1>
-          <TokenAnnotator
+          <h1>Selection: {state.tag}</h1>
+          <TextAnnotator
             style={{
               maxWidth: 500,
               lineHeight: 1.5,
             }}
-            tokens={text.text.split(" ")}
+            content={text.text}
             value={state.value}
             onChange={(value) => setState({ value })}
             getSpan={(span) => ({
@@ -55,15 +60,20 @@ const Annotate = () => {
             })}
           />
         </div>
-        <button onClick={() => console.error(state)}>Submit</button>
+        <div
+          className="border-2 min-w-fit p-2 hover:cursor-pointer"
+          onClick={() => console.error(state)}
+        >
+          Submit
+        </div>
       </div>
 
       <div className="text-card">
         <div className="editor">
           <h1>
-            <strong>Edit</strong>
+            <strong>Raw</strong>
           </h1>
-          <p>{text.text}</p>
+          <pre className="py-2">{JSON.stringify(state, null, 2)}</pre>
         </div>
       </div>
     </div>

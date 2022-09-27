@@ -28,7 +28,7 @@ table {
   @apply text-blue-500 hover:underline;
 }
 .text-card {
-  @apply w-1/3 border-2 shadow-sm m-auto my-8;
+  @apply w-1/3 border-2 shadow-sm m-auto my-8 p-2;
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
