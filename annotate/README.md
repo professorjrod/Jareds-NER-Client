@@ -1,10 +1,14 @@
 # README
+
 # How to import dataset texts from csv
->Make a dataset with the title of your dataset first
+
+> Make a dataset with the title of your dataset first
+> Dataset.create(title: "Dataset 1")
 >
->in rails console (rails c):
+> in rails console (rails c):
+
 ```
-import 'csv'
+require 'csv'
 dataset = Dataset.first
 csv = CSV.read("path-to-your-data")
 csv.each do |row|
@@ -13,3 +17,10 @@ end
 dataset.save
 ```
 
+# How to set up python for spacy
+
+# pip install -U spacy
+
+# python -m spacy download en_Core_web_sm
+
+# now you can import spacy
