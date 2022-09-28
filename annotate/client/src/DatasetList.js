@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 const DatasetList = () => {
-  const [datasets, setDatasets] = useState([]);
+  const [datasets, setDatasets] = useState([{ title: "Loading..." }]);
 
   useEffect(() => {
     fetchDatasets();

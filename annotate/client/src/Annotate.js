@@ -24,6 +24,34 @@ const Annotate = () => {
       .catch((err) => console.log(err));
   }, []);
 
+  //snake space bc of rails
+  const formatAnnotations = () => {
+    const annotationArray = state.value.map((annotation) => {
+      return {
+        selection_start: annotation.start,
+        selection_end: annotation.end,
+        tag: annotation.tag,
+        text: annotation.text,
+      };
+    });
+    return { dataset_text_id: id, annotations: annotationArray };
+  };
+
+  //Need to post the formated annotations with correct dataset text id
+  //
+  const handleSubmit = (e) => {
+    fetch(`/texts/${id}/annotation`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formatAnnotations()),
+    })
+      .then((res) => res.json())
+      .then((data) => window.alert(`POSTED: ${JSON.stringify(data)}`))
+      .catch((err) => console.error(err));
+  };
+
   return (
     <div className="flex">
       <Link className="breadcrumb" to={`/datasets/${text.dataset_id}`}>
@@ -62,7 +90,7 @@ const Annotate = () => {
         </div>
         <div
           className="border-2 min-w-fit p-2 hover:cursor-pointer"
-          onClick={() => console.error(state)}
+          onClick={() => handleSubmit()}
         >
           Submit
         </div>
