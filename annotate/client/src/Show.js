@@ -6,6 +6,19 @@ const Show = () => {
 
   const [dataset, setDataset] = useState([]);
 
+  //State variables for the filter checkboxes
+
+  const [filter, setFilter] = useState({
+    onlyShowAnnotated: false,
+    onlyShowUnannotated: false,
+  });
+
+  const [stats, setStats] = useState({
+    annotated: 0,
+    unannotated: 0,
+    total: 0,
+  });
+
   useEffect(() => {
     if (id) {
       fetch(`/datasets/${id}`)
@@ -15,7 +28,7 @@ const Show = () => {
         })
         .catch((err) => console.log(err));
     }
-  }, []);
+  }, [id]);
 
   return (
     <>
@@ -35,27 +48,31 @@ const Show = () => {
 };
 
 const Texts = ({ texts }) => (
-  <table className="table">
-    <thead>
-      <tr>
-        <th>Summary</th>
-      </tr>
-    </thead>
-    <tbody>
-      {texts?.map((text) => (
-        <tr key={text.id}>
-          <td>{text.text.substr(0, 50) + "..."}</td>
-          <td>
-            <Link
-              className="underline px-2 text-blue-500"
-              to={`/annotate/${text.id}`}
-            >
-              Annotate &raquo;
-            </Link>
-          </td>
+  <>
+    <div className="filters">
+      <div className="navbar-button ">All</div>
+      <div className="navbar-button ">Unannotated</div>
+      <div className="navbar-button">Annotated</div>
+    </div>
+    <table className="table">
+      <thead>
+        <tr>
+          <th>Annotation list</th>
         </tr>
-      ))}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {texts?.map((text) => (
+          <tr key={text.id}>
+            <td>{text.text.substr(0, 50) + "..."}</td>
+            <td>
+              <Link className="breadcrumb" to={`/annotate/${text.id}`}>
+                Annotate &raquo;
+              </Link>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </>
 );
 export default Show;

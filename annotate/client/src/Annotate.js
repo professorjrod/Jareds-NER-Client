@@ -53,55 +53,53 @@ const Annotate = () => {
   };
 
   return (
-    <div className="flex">
+    <div>
       <Link className="breadcrumb" to={`/datasets/${text.dataset_id}`}>
         Back to dataset &raquo;
       </Link>
-
-      <div className="text-card">
-        <div className="preview">
-          <h1>
-            <strong>Edit</strong>
-          </h1>
-          <select
-            onChange={(e) => setState({ ...state, tag: e.target.value })}
-            value={state.tag}
-          >
-            <option value="MAKE">MAKE</option>
-            <option value="MODEL">MODEL</option>
-            <option value="YEAR">YEAR</option>
-            <option value="TRIM">TRIM</option>
-          </select>
-          <h1>Selection: {state.tag}</h1>
-          <TextAnnotator
-            style={{
-              maxWidth: 500,
-              lineHeight: 1.5,
-            }}
-            content={text.text}
-            value={state.value}
-            onChange={(value) => setState({ value })}
-            getSpan={(span) => ({
-              ...span,
-              tag: state.tag,
-              color: TAG_COLORS[state.tag],
-            })}
-          />
+      <div className="flex">
+        <div className="text-card">
+          <div className="preview">
+            <h1>
+              <strong>Edit</strong>
+            </h1>
+            <select
+              onChange={(e) => setState({ ...state, tag: e.target.value })}
+              value={state.tag}
+            >
+              <option value="MAKE">MAKE</option>
+              <option value="MODEL">MODEL</option>
+              <option value="YEAR">YEAR</option>
+              <option value="TRIM">TRIM</option>
+            </select>
+            <h1>Selection: {state.tag}</h1>
+            <TextAnnotator
+              style={{
+                maxWidth: 500,
+                lineHeight: 1.5,
+              }}
+              content={text.text}
+              value={state.value}
+              onChange={(value) => setState({ value })}
+              getSpan={(span) => ({
+                ...span,
+                tag: state.tag,
+                color: TAG_COLORS[state.tag],
+              })}
+            />
+          </div>
+          <div className="submit" onClick={() => handleSubmit()}>
+            Submit
+          </div>
         </div>
-        <div
-          className="border-2 min-w-fit p-2 hover:cursor-pointer"
-          onClick={() => handleSubmit()}
-        >
-          Submit
-        </div>
-      </div>
 
-      <div className="text-card">
-        <div className="editor">
-          <h1>
-            <strong>Raw</strong>
-          </h1>
-          <pre className="py-2">{JSON.stringify(state, null, 2)}</pre>
+        <div className="text-card">
+          <div className="editor">
+            <h1>
+              <strong>Raw</strong>
+            </h1>
+            <pre className="py-2">{JSON.stringify(state, null, 2)}</pre>
+          </div>
         </div>
       </div>
     </div>
