@@ -34,7 +34,7 @@ tr {
   @apply border-b border-gray-400;
 }
 td {
-  @apply py-4;
+  @apply p-4;
 }
 table {
   @apply m-auto w-fit;
