@@ -5,19 +5,24 @@ const Show = () => {
   const { id } = useParams();
 
   const [dataset, setDataset] = useState([]);
-
+  const [filteredTexts, setFilteredTexts] = useState([]);
   //State variables for the filter checkboxes
-
-  const [filter, setFilter] = useState({
-    onlyShowAnnotated: false,
-    onlyShowUnannotated: false,
-  });
 
   const [stats, setStats] = useState({
     annotated: 0,
     unannotated: 0,
     total: 0,
   });
+  const [filter, setFilter] = useState({
+    onlyShowAnnotated: false,
+    onlyShowUnannotated: false,
+  });
+  const updateStatsFromDataset = () => {
+    const annotated = dataset.texts.filter((text) => text.annotated).length;
+    const unannotated = dataset.texts.filter((text) => !text.annotated).length;
+    const total = dataset.texts.length;
+    setStats({ annotated, unannotated, total });
+  };
 
   useEffect(() => {
     if (id) {
@@ -25,11 +30,27 @@ const Show = () => {
         .then((res) => res.json())
         .then((data) => {
           setDataset(data);
+          setFilteredTexts(data.texts);
+          updateStatsFromDataset();
         })
         .catch((err) => console.log(err));
     }
   }, [id]);
 
+  useEffect(() => {
+    setFilteredTexts(filterTexts());
+    console.log(`filter changed`);
+  }, [filter]);
+
+  const filterTexts = (texts) => {
+    if (filter.onlyShowAnnotated) {
+      return dataset.texts.filter((text) => text.is_annotated);
+    } else if (filter.onlyShowUnannotated) {
+      return dataset.texts.filter((text) => !text.is_annotated);
+    } else {
+      return dataset.texts;
+    }
+  };
   return (
     <>
       <Link to="/datasets" className="breadcrumb">
@@ -40,39 +61,74 @@ const Show = () => {
       ) : (
         <>
           <h2 className="title">{dataset.title}</h2>
-          <Texts texts={dataset.texts} />
+          <div className="text-card">{`${stats.annotated} of ${stats.total} annotated. ${stats.unannotated} remaining.`}</div>
+          <div className="filters">
+            <div
+              className="navbar-button"
+              onClick={() =>
+                setFilter({
+                  onlyShowAnnotated: false,
+                  onlyShowUnannotated: false,
+                })
+              }
+            >
+              All
+            </div>
+            <div
+              className="navbar-button"
+              onClick={() =>
+                setFilter({
+                  onlyShowAnnotated: false,
+                  onlyShowUnannotated: true,
+                })
+              }
+            >
+              Unannotated
+            </div>
+            <div
+              className="navbar-button"
+              onClick={() =>
+                setFilter({
+                  onlyShowAnnotated: true,
+                  onlyShowUnannotated: false,
+                })
+              }
+            >
+              Annotated
+            </div>
+          </div>
+          <Texts texts={filteredTexts} />
         </>
       )}
     </>
   );
 };
 
-const Texts = ({ texts }) => (
-  <>
-    <div className="filters">
-      <div className="navbar-button ">All</div>
-      <div className="navbar-button ">Unannotated</div>
-      <div className="navbar-button">Annotated</div>
-    </div>
-    <table className="table">
-      <thead>
-        <tr>
-          <th>Annotation list</th>
-        </tr>
-      </thead>
-      <tbody>
-        {texts?.map((text) => (
-          <tr key={text.id}>
-            <td>{text.text.substr(0, 50) + "..."}</td>
-            <td>
-              <Link className="breadcrumb" to={`/annotate/${text.id}`}>
-                Annotate &raquo;
-              </Link>
-            </td>
+const Texts = ({ texts }) => {
+  return (
+    <>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Text to annotate</th>
+            <th>Annotated?</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
-  </>
-);
+        </thead>
+        <tbody>
+          {texts?.map((text) => (
+            <tr key={text.id}>
+              <td>{text.text.substr(0, 50) + "..."}</td>
+              <td>{text.is_annotated ? "✓" : "✕"}</td>
+              <td>
+                <Link className="breadcrumb" to={`/annotate/${text.id}`}>
+                  Annotate &raquo;
+                </Link>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
+  );
+};
 export default Show;
