@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 const Show = () => {
-  //useParams is a hook that allows us to access the id in the url
   const { id } = useParams();
 
-  const [dataset, setDataset] = useState([]);
+  const [dataset, setDataset] = useState({ title: "Loading...", texts: [] });
   const [filteredTexts, setFilteredTexts] = useState([]);
   //State variables for the filter checkboxes
 
@@ -17,6 +16,7 @@ const Show = () => {
     onlyShowAnnotated: false,
     onlyShowUnannotated: false,
   });
+
   const updateStatsFromDataset = () => {
     const annotated = dataset.texts.filter((text) => text.annotated).length;
     const unannotated = dataset.texts.filter((text) => !text.annotated).length;
@@ -31,15 +31,18 @@ const Show = () => {
         .then((data) => {
           setDataset(data);
           setFilteredTexts(data.texts);
-          updateStatsFromDataset();
         })
         .catch((err) => console.log(err));
     }
   }, [id]);
 
+  //no more double click ;-D
+  useEffect(() => {
+    updateStatsFromDataset();
+  }, [dataset]);
+
   useEffect(() => {
     setFilteredTexts(filterTexts());
-    console.log(`filter changed`);
   }, [filter]);
 
   const filterTexts = (texts) => {
@@ -51,6 +54,7 @@ const Show = () => {
       return dataset.texts;
     }
   };
+
   return (
     <>
       <Link to="/datasets" className="breadcrumb">

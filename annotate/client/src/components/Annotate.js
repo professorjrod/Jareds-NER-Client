@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { TextAnnotator } from "react-text-annotate";
+import Keybutton from "./Keybutton";
 const Annotate = () => {
   let { id } = useParams();
   let [text, setText] = useState({ text: "Loading..." });
@@ -24,6 +25,9 @@ const Annotate = () => {
       .catch((err) => console.log(err));
   }, []);
 
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
   //snake space bc of rails
   const formatAnnotations = () => {
     const annotationArray = state.value.map((annotation) => {
@@ -61,18 +65,15 @@ const Annotate = () => {
         <div className="text-card">
           <div className="preview">
             <h1>
-              <strong>Edit</strong>
+              <strong>Keybinds</strong>
             </h1>
-            <select
-              onChange={(e) => setState({ ...state, tag: e.target.value })}
-              value={state.tag}
-            >
-              <option value="MAKE">MAKE</option>
-              <option value="MODEL">MODEL</option>
-              <option value="YEAR">YEAR</option>
-              <option value="TRIM">TRIM</option>
-            </select>
-            <h1>Selection: {state.tag}</h1>
+            <div className="keybuttons flex space-x-21">
+              <Keybutton tag="MAKE" button="1" setState={setState} />
+              <Keybutton tag="MODEL" button="2" setState={setState} />
+              <Keybutton tag="TRIM" button="3" setState={setState} />
+              <Keybutton tag="YEAR" button="4" setState={setState} />
+            </div>
+            <h1>Currently annotating: {state.tag}</h1>
             <TextAnnotator
               style={{
                 maxWidth: 500,

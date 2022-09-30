@@ -8,8 +8,11 @@ const App = () => (
     <Navbar />
     <Routes>
       <Route path="/datasets" element={<Datasets />} />
-      <Route path="/" element={<div>Home</div>} />
       <Route path="datasets/:id" element={<Show />} />
+      <Route
+        path="/"
+        element={<div>This should be a component with app documentation</div>}
+      />
       <Route path="annotate/:id" element={<Annotate />} />
     </Routes>
   </Router>
