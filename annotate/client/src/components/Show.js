@@ -19,8 +19,10 @@ const Show = () => {
   });
 
   const updateStatsFromDataset = () => {
-    const annotated = dataset.texts.filter((text) => text.annotated).length;
-    const unannotated = dataset.texts.filter((text) => !text.annotated).length;
+    const annotated = dataset.texts.filter((text) => text.is_annotated).length;
+    const unannotated = dataset.texts.filter(
+      (text) => !text.is_annotated
+    ).length;
     const total = dataset.texts.length;
     setStats({ annotated, unannotated, total });
   };
