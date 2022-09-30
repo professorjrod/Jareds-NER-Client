@@ -92,7 +92,13 @@ const Annotate = () => {
 
   return (
     <div>
-      <Confirm setModal={setModal} onSubmit={handleSubmit} state={state} />
+      <Confirm
+        setModal={setModal}
+        onSubmit={handleSubmit}
+        state={state}
+        text={text}
+        TAG_COLORS={TAG_COLORS}
+      />
       <Link className="breadcrumb" to={`/datasets/${text.dataset_id}`}>
         Back to dataset &raquo;
       </Link>
@@ -133,7 +139,7 @@ const Annotate = () => {
           </div>
           {/* TODO make submit confirmation with annotation review */}
           <div className="submit" onClick={handleConfirm}>
-            Submit
+            Preview Submit
           </div>
         </div>
 
