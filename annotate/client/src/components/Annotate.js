@@ -114,6 +114,7 @@ const Annotate = () => {
               })}
             />
           </div>
+          {/* TODO make submit confirmation with annotation review */}
           <div className="submit" onClick={() => handleSubmit()}>
             Submit
           </div>
