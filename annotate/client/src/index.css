@@ -16,10 +16,10 @@ body {
   @apply w-fit hover:cursor-pointer p-4 text-center text-3xl font-bold flex items-center justify-center;
 }
 .submit {
-  @apply border-2 min-w-fit p-2 hover:cursor-pointer;
+  @apply border-2 min-w-fit p-2 hover:cursor-pointer hover:opacity-75;
 }
 .navbar {
-  @apply w-full flex justify-between items-center p-4 bg-white dark:bg-[#222222];
+  @apply w-full flex justify-between items-center p-4 bg-[#222222];
 }
 .navbar div {
   @apply space-x-2 font-semibold min-w-[16];
@@ -50,6 +50,25 @@ table {
 }
 .text-card {
   @apply w-1/3 border-2 shadow-sm m-auto my-8 p-2;
+}
+.confirm-blur {
+  @apply absolute min-w-full min-h-full bg-gray-900 opacity-90 flex z-10;
+}
+.confirm-card {
+  @apply m-auto w-1/4 h-[50%] bg-[#ECE8E8] rounded relative bottom-16;
+}
+.confirm-preview {
+  @apply overflow-hidden mt-16;
+}
+
+.confirm-close {
+  @apply w-8 h-8 bg-[red] ml-auto relative left-2 bottom-2 text-2xl text-center rounded border-l-2 border-b-2 border-black hover:bg-red-500 hover:cursor-pointer;
+}
+.confirm-container {
+  @apply flex z-20 text-black w-screen h-screen absolute justify-center;
+}
+.tag-span {
+  @apply font-medium ml-[6px] text-[0.7em];
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
