@@ -1,25 +1,48 @@
 import React from "react";
 import { useEffect } from "react";
 import { TextAnnotator } from "react-text-annotate";
-const Confirm = ({ setModal, onSubmit, state }) => {
+const Confirm = ({ setModal, onSubmit, state, text, TAG_COLORS }) => {
+  const highlightAnnotatedText = () => {
+    const innerText = [];
+    const highlightedText = state.value.map((annotation) => {
+      innerText.push(annotation.text);
+      return (
+        <span
+          style={{
+            backgroundColor: TAG_COLORS[annotation.tag],
+            padding: "0 5px",
+          }}
+        >
+          {annotation.text}
+          <span className="tag-span">{annotation.tag}</span>
+        </span>
+      );
+    });
+    return text.text.split(" ").map((word) => {
+      if (innerText.includes(word)) {
+        return highlightedText[innerText.indexOf(word)];
+      } else {
+        return word + " ";
+      }
+    });
+  };
+
   return (
     <div className="confirm">
-      <div className="blur rounded-sm w-screen min-h-screen absolute bottom-2 top-4 bg-gray-900 opacity-90 flex z-10"></div>
-      <div className="flex z-20 text-black w-screen h-screen absolute justify-center">
-        <div className="m-auto flex w-1/2 h-[50%] bg-[#ECE8E8] z-20">
+      <div className="confirm-blur"></div>
+      <div className="confirm-container">
+        <div className="confirm-card">
           {" "}
-          <div
-            className="w-8 h-8 bg-[red] relative bottom-2 right-2 text-2xl text-center rounded hover:bg-red-500 hover:cursor-pointer"
-            onClick={() => setModal(false)}
-          >
+          <div className="confirm-close" onClick={() => setModal(false)}>
             X
           </div>
-          <div className="h-auto overflow-hidden w-auto">
-            {JSON.stringify(state, null, 2)}
-          </div>
-          <div className=" w-fit mt-auto mx-auto mb-2">
-            <div className=" submit b-2 border-black" onClick={onSubmit}>
-              <h1> | Are you sure you want to submit? | </h1>
+          <div className="confirm-preview">{highlightAnnotatedText()}</div>
+          <div className="flex p-6">
+            <div
+              className="submit b-2 border-black h-12 w-24 mx-auto relative"
+              onClick={onSubmit}
+            >
+              <h1> Submit </h1>
             </div>
           </div>
         </div>
