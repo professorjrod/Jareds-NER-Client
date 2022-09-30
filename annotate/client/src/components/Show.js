@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import Texts from "./Texts";
 const Show = () => {
   const { id } = useParams();
 
@@ -108,31 +109,4 @@ const Show = () => {
   );
 };
 
-const Texts = ({ texts }) => {
-  return (
-    <>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Text to annotate</th>
-            <th>Annotated?</th>
-          </tr>
-        </thead>
-        <tbody>
-          {texts?.map((text) => (
-            <tr key={text.id}>
-              <td>{text.text.substr(0, 50) + "..."}</td>
-              <td>{text.is_annotated ? "✓" : "✕"}</td>
-              <td>
-                <Link className="breadcrumb" to={`/annotate/${text.id}`}>
-                  Annotate &raquo;
-                </Link>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </>
-  );
-};
 export default Show;
