@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { TextAnnotator } from "react-text-annotate";
 import Keybutton from "./Keybutton";
+import { BiRefresh } from "react-icons/bi";
 const Annotate = () => {
   let { id } = useParams();
   let [text, setText] = useState({ text: "Loading..." });
@@ -18,11 +19,28 @@ const Annotate = () => {
     TRIM: "#f4c56f",
   };
 
-  useEffect(() => {
+  const resetState = () => {
+    setState({
+      value: [],
+      tag: "MAKE",
+    });
+    //Changes the color of the keybuttons
+    document.querySelectorAll(".keybutton").forEach((component) => {
+      component.classList.remove("bg-blue-500");
+      component.classList.add("bg-white");
+    });
+  };
+
+  const fetchData = () => {
     fetch(`/texts/${id}`)
       .then((res) => res.json())
       .then((data) => setText(data))
       .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    fetchData();
+    //Need to highlist the keybutton for the current tag
   }, []);
 
   useEffect(() => {
@@ -63,17 +81,24 @@ const Annotate = () => {
       </Link>
       <div className="flex">
         <div className="text-card">
-          <div className="preview">
+          <div className="preview ">
             <h1>
               <strong>Keybinds</strong>
             </h1>
-            <div className="keybuttons flex space-x-21">
+            {/* TODO fix delete annotations glitch*/}
+            <div className="space-x-2 flex justify-center">
               <Keybutton tag="MAKE" button="1" setState={setState} />
               <Keybutton tag="MODEL" button="2" setState={setState} />
               <Keybutton tag="TRIM" button="3" setState={setState} />
               <Keybutton tag="YEAR" button="4" setState={setState} />
+              <h1
+                className="text-6xl m-auto hover:cursor-pointer"
+                onClick={resetState}
+              >
+                <BiRefresh />
+              </h1>
             </div>
-            <h1>Currently annotating: {state.tag}</h1>
+            <h1>Choose a tag and highlight text to begin annotating.</h1>
             <TextAnnotator
               style={{
                 maxWidth: 500,
@@ -81,7 +106,7 @@ const Annotate = () => {
               }}
               content={text.text}
               value={state.value}
-              onChange={(value) => setState({ value })}
+              onChange={(value) => setState({ ...state, value })}
               getSpan={(span) => ({
                 ...span,
                 tag: state.tag,
