@@ -4,9 +4,11 @@ import { Link } from "react-router-dom";
 import { TextAnnotator } from "react-text-annotate";
 import Keybutton from "./Keybutton";
 import { BiRefresh } from "react-icons/bi";
+import Confirm from "./Confirm";
 const Annotate = () => {
   let { id } = useParams();
   let [text, setText] = useState({ text: "Loading..." });
+  let [modal, setModal] = useState(false);
   let [state, setState] = useState({
     value: [],
     tag: "MAKE",
@@ -72,10 +74,25 @@ const Annotate = () => {
       .then((res) => res.json())
       .then((data) => window.alert(`POSTED: ${JSON.stringify(data)}`))
       .catch((err) => console.error(err));
+
+    setModal(false);
   };
+
+  const handleConfirm = (e) => {
+    e.preventDefault();
+    console.log("Here!");
+    setModal(true);
+  };
+
+  useEffect(() => {
+    modal
+      ? document.querySelector(".confirm").classList.remove("hidden")
+      : document.querySelector(".confirm").classList.add("hidden");
+  }, [modal]);
 
   return (
     <div>
+      <Confirm setModal={setModal} onSubmit={handleSubmit} state={state} />
       <Link className="breadcrumb" to={`/datasets/${text.dataset_id}`}>
         Back to dataset &raquo;
       </Link>
@@ -115,7 +132,7 @@ const Annotate = () => {
             />
           </div>
           {/* TODO make submit confirmation with annotation review */}
-          <div className="submit" onClick={() => handleSubmit()}>
+          <div className="submit" onClick={handleConfirm}>
             Submit
           </div>
         </div>

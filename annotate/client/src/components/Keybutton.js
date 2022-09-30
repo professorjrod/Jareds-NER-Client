@@ -24,7 +24,7 @@ const Keybutton = ({ tag, button, state, setState }) => {
       <div
         className={
           "keybutton " +
-          (keyPressed ? "bg-blue-500 rounded" : "bg-white rounded")
+          (keyPressed ? "bg-[#005577] rounded" : "bg-white rounded")
         }
       >
         <div className="text-[32px]">{button}</div>

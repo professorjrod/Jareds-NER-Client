@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import Confirm from "./Confirm";
 import Texts from "./Texts";
 const Show = () => {
   const { id } = useParams();
@@ -17,6 +18,8 @@ const Show = () => {
     onlyShowAnnotated: false,
     onlyShowUnannotated: false,
   });
+
+  const [modal, setModal] = useState(false);
 
   const updateStatsFromDataset = () => {
     const annotated = dataset.texts.filter((text) => text.is_annotated).length;
@@ -59,14 +62,14 @@ const Show = () => {
   };
 
   return (
-    <>
+    <div>
       <Link to="/datasets" className="breadcrumb">
         &laquo; All Datasets
       </Link>
       {dataset === {} ? (
         <p>Loading...</p>
       ) : (
-        <>
+        <div>
           <h2 className="title">{dataset.title}</h2>
           <div className="text-card">{`${stats.annotated} of ${stats.total} annotated. ${stats.unannotated} remaining.`}</div>
           <div className="filters">
@@ -105,9 +108,9 @@ const Show = () => {
             </div>
           </div>
           <Texts texts={filteredTexts} />
-        </>
+        </div>
       )}
-    </>
+    </div>
   );
 };
 
