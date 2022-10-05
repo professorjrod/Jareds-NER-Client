@@ -52,13 +52,13 @@ table {
   @apply w-1/3 border-2 shadow-sm m-auto my-8 p-2;
 }
 .confirm-blur {
-  @apply absolute min-w-full min-h-full bg-gray-900 opacity-90 flex z-10;
+  @apply fixed w-screen h-screen top-0 left-0 z-10 bg-black;
 }
 .confirm-card {
-  @apply m-auto w-1/4 h-[50%] bg-[#ECE8E8] rounded relative bottom-16;
+  @apply m-auto w-1/4 max-h-60 bg-[#ECE8E8] rounded relative bottom-16 min-h-fit;
 }
 .confirm-preview {
-  @apply overflow-hidden mt-16;
+  @apply overflow-hidden mt-4 px-2 pl-1;
 }
 
 .confirm-close {

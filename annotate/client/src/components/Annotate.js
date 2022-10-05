@@ -79,7 +79,6 @@ const Annotate = () => {
   };
 
   const handleConfirm = (e) => {
-    e.preventDefault();
     console.log("Here!");
     setModal(true);
   };

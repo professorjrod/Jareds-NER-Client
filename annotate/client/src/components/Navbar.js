@@ -16,6 +16,9 @@ const Navbar = () => (
       <Link className="navbar-button" to="/datasets">
         Datasets
       </Link>
+      <Link className="navbar-button" to="/datasets">
+        Demo
+      </Link>
     </div>
   </div>
 );
