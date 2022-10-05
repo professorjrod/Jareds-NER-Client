@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import Datasets from "./Datasets";
 import Show from "./Show";
 import Annotate from "./Annotate";
+import Demo from "./Demo";
 const App = () => (
   <Router>
     <Navbar />
@@ -14,6 +15,7 @@ const App = () => (
         element={<div>This should be a component with app documentation</div>}
       />
       <Route path="annotate/:id" element={<Annotate />} />
+      <Route path="spacy/demo" element={<Demo />} />
     </Routes>
   </Router>
 );

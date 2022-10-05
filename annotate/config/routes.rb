@@ -1,6 +1,6 @@
 # config/routes.rb
 Rails.application.routes.draw do
-  get 'spacy/test'
+  post '/demo', to: 'spacy#demo'
   get 'dataset_text_annotations/post'
   get 'datasets/index', to: 'datasets#index'
   get 'datasets/:id', to: 'datasets#show'

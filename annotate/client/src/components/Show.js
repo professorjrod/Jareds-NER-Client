@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import Confirm from "./Confirm";
 import Texts from "./Texts";
 const Show = () => {
   const { id } = useParams();

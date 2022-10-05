@@ -16,7 +16,7 @@ const Navbar = () => (
       <Link className="navbar-button" to="/datasets">
         Datasets
       </Link>
-      <Link className="navbar-button" to="/datasets">
+      <Link className="navbar-button" to="spacy/demo">
         Demo
       </Link>
     </div>

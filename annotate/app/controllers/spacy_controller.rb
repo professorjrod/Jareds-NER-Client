@@ -1,10 +1,12 @@
 class SpacyController < ApplicationController
-  def test
-    input_text = params[:input_text]
-    @entities = `python lib/assets/python/spacy_test.py "#{input_text}"`
-    render json: @entities, status: :ok
-    # input = ' heart'
-    # @heart = `python lib/assets/python/spacy_test.py "#{input}"`
-    # render json: @heart, status: :ok
+  require 'net/http'
+  def demo
+    input_text = params[:text]
+    uri = URI.parse('http://localhost:5000/demo')
+    http = Net::HTTP.new(uri.host, uri.port)
+    req = Net::HTTP::Post.new(uri, 'Content-Type' => 'application/json')
+    req.body = input_text.to_json
+    res = http.request(req)
+    render json: res.body, status: :ok
   end
 end
